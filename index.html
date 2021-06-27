@@ -1,5 +1,53 @@
+<?php
+// Turn off error reporting
+error_reporting(0);
+
+// Report runtime errors
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+// Report all errors
+error_reporting(E_ALL);
+
+// Same as error_reporting(E_ALL);
+ini_set("error_reporting", E_ALL);
+
+// Report all errors except E_NOTICE
+error_reporting(E_ALL & ~E_NOTICE);
+?>
+
+<?php
+$con = mysqli_connect("localhost", "root", "") or die("No Connection");
+mysqli_select_db($con,"schools") or die("No Database");
+
+$id = isset($_POST['id']) ? $_POST['id'] : '';
+$name = isset($_POST['name']) ? $_POST['name'] : '';
+$school_location = isset($_POST['school_location']) ? $_POST['school_location'] : '';
+$principal = isset($_POST['principal']) ? $_POST['principal'] : '';
+$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$students = isset($_POST['students']) ? $_POST['students'] : '';
+$messages = isset($_POST['messages']) ? $_POST['messages'] : '';
+
+
+
+// $sql = "INSERT INTO eschool (id,name,school_location,principal,phone,email,students,messages) VALUES ('$id', '$name', '$school_location', '$principal', '$phone', '$email', '$messages')";
+$sql = "INSERT INTO eschool (id, name, school_location, principal, phone, email, students, messages)
+    VALUES ('".$_POST["id"]."','".$_POST["name"]."','".$_POST["school_location"]."','".$_POST["principal"]."','".$_POST["phone"]."','".$_POST["email"]."','".$_POST["students"]."','".$_POST["messages"]."')";
+$sql = mysqli_query($con,$sql);
+
+
+if (!$sql) {
+  echo '<script type="text/javascript">alert("Sorry This name has already been taken by another school ");</script>';
+}
+else{
+  echo '<script type="text/javascript">alert("Thank you, We will contact to you within 24hrs ");</script>';
+
+}
+?>
+
+
 <html>
-<title> Hamuj Technology </title>
+<title> Xpress </title>
 <link rel="icon" href="images/hamujtech.jpg">
 <head>
   <meta charset="utf-8">
@@ -26,6 +74,63 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
+
+
+
+.formtwo {
+  outline: 0;
+  float: left;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.formtwo > .textbox {
+  outline: 0;
+  height: 42px;
+  width: 244px;
+  line-height: 42px;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #212121;
+  border: 0;
+  float: left;
+  -webkit-border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+.formtwo > .textbox:focus {
+  outline: 0;
+  background-color: #FFF;
+}
+
+.formtwo > .button {
+  outline: 0;
+  background: none;
+  background-color: rgba(38, 50, 56, 0.8);
+  float: left;
+  height: 42px;
+  width: 42px;
+  text-align: center;
+  line-height: 42px;
+  border: 0;
+  color: #FFF;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 16px;
+  text-rendering: auto;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transition: background-color .4s ease;
+  transition: background-color .4s ease;
+  -webkit-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.formtwo > .button:hover {
+  background-color: rgba(0, 150, 136, 0.8);
+}
+
+
  
 .wrapper {
   display: table;
@@ -525,7 +630,10 @@ header button:hover, button:active {
    
 <!--Navigation Bar-->
   <div class="logo">
-    <h3 style="color: #29587d; font-weight: bold;"> <img src="images/hamujtech.jpg" style="width: 40px; height: 40px; margin-top: 2px;"> Hamuj Technology</h3>
+    <h3 style="color: #29587d; font-weight: bold;"> <form class="formtwo" method="post" style="margin-top: 10px;">
+  <input type="text" class="textbox" placeholder="Search">
+  <input title="Search" value="" type="submit" class="button">
+</form></h3>
   </div>
    <span id="close"> <img style="width: 25px;" src="http://www.pvhc.net/img5/onbbqnqzkjrtvirmiqnp.png" alt="CLOSE"> </img> </span>
   <span id="menu"> <img style="width: 25px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR11WXR-a18XfNZknL7S4lu0lLyC4aWZPY4sLd4wNHUNv9So2gd" alt="MENU"> </span>
@@ -536,9 +644,11 @@ header button:hover, button:active {
       <li> <a href="requirements.pdf"> PROCESS REQUIREMENT </a> </li>
       <li> <a href="#"> FORMS </a> </li>
       <li> <a href="payments.pdf"> E-PAYMENT </a> </li> -->
-      <li> <a href="https://www.schoolsnetwork.ng/about.php"> ABOUT US </a> </li>
+      <li> <a href="https://www.schoolsnetwork.ng/about.php"> People </a> </li>
       <!-- <li> <a href="#"> BOOK NOW </a> </li> -->
-      <li> <a href="http://hamujtechnology.com.ng/"> CONTACT US </a> </li>
+      <li> <a href="http://hamujtechnology.com.ng/"> Government </a> </li>
+      <li> <a href="http://hamujtechnology.com.ng/"> Schools </a> </li>
+      <li> <a href="http://hamujtechnology.com.ng/"> Companies </a> </li>
     </ul>
   </nav>
 <!--Navigation Bar-->
@@ -549,7 +659,7 @@ header button:hover, button:active {
     <div class="header-text">
     <h1>   <br><span id="photography">  </span></h1>
     <!-- <p> Kano State Bureau for Land Management is vested with the authority of land administration in the state. It is an offshoot of Kano provisional land office which undergoes series of transformations. In 1964. </p> -->
-    <button> BOOK NOW </button>
+    <button> Join Us!</button>
     </div>
   </header>
   <!--Hero Image-->
@@ -563,9 +673,8 @@ header button:hover, button:active {
                     
                     <div class="col-xs-12 col-sm-12">
                         <div class="card">
-                            <img src="images/jafar1.jpg" style="width:170px;height:170px;margin-right:15px; float: left; text-align: justify; "><p style="text-align: justify; margin-left: 10px; margin-right: 10px; padding-top: 10px;">e-School delivers a comprehensive platform that allows schools, universities, and small learning centers take control over multiple areas of their operations, from learning to finance administration to resource planning and management. It is a software that readily addresses varying needs of schools regardless of size, giving you the edge you need to deliver and monitor learning while remaining in control over your administrative functions.
-
-For schools and colleges with limited resources, e-School gives them the capability they need to run their establishments efficiently even without Internet connection. Modules are very user-friendly and can be handled by your staff with solid IT literacy and foundation. Desktop modules for lower-resourced schools and colleges do not demand high specs hardware and computers and a server is not necessary.</p>
+                            <img src="images/jafar1.jpg" style="width:50px;height:50px;margin-right:15px; float: left; text-align: justify; "><p style="text-align: justify; margin-left: 10px; margin-right: 10px; padding-top: 10px;">Xpress is the Voice of Nigeria in Nigeria Languages
+Join Nigeri's Best minds that speak their mind on Xpress</p>
 
                             
                             <div class="card-read-more">
@@ -573,7 +682,7 @@ For schools and colleges with limited resources, e-School gives them the capabil
  
   <!-- Button to Open the Modal -->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Book Now
+    Join Us!
   </button>
 
   <!-- The Modal -->
@@ -589,7 +698,8 @@ For schools and colleges with limited resources, e-School gives them the capabil
         
         <!-- Modal body -->
         <div class="modal-body">
-          <form action="form.php" method="post" style="text-align: left; font-weight: bold;">
+
+          <form action="index.php" method="post" style="text-align: left; font-weight: bold;">
           <label>Name of the School</label>
           <input name="name" id="name" type="text" class="form-control">
           <label>Location</label>
@@ -756,6 +866,11 @@ For schools and colleges with limited resources, e-School gives them the capabil
   
 </body>
 <script type="text/javascript">
+  
+</script>
+
+
+<script type="text/javascript">
   jQuery(document).ready(function() {
   jQuery("#menu").click(function () {
     jQuery("nav").slideToggle(400, function () {
@@ -796,4 +911,6 @@ function showMenu () {
 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 </html>
